@@ -28,9 +28,9 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
-    private TextView dice1 = null;
-    private TextView dice2 = null;
-    private TextView dice3 = null;
+    private List<ImageView> diceList = new ArrayList<ImageView>();
+    private List<ViewPropertyAnimator> animatorList = new ArrayList<ViewPropertyAnimator>();
+
     private int value = 0;
     private int rotateValue = 500;
     private int visibleCount = 1;
@@ -41,10 +41,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LinearLayout ll = (LinearLayout)findViewById(R.id.ll);
-        dice1=(TextView)findViewById(R.id.dice1);
-        dice2=(TextView)findViewById(R.id.dice2);
-        dice3=(TextView)findViewById(R.id.dice3);
+        diceList.add((ImageView)findViewById(R.id.dice1));
+        diceList.add((ImageView)findViewById(R.id.dice2));
+        diceList.add((ImageView)findViewById(R.id.dice3));
         fab = (FloatingActionButton)findViewById(R.id.fab);
+
+        for(ImageView dice : diceList){
+            animatorList.add(dice.animate());
+        }
 
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -52,16 +56,16 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (visibleCount){
                     case 1:
-                        dice2.setVisibility(View.VISIBLE);
+                        diceList.get(1).setVisibility(View.VISIBLE);
                         visibleCount++;
                         break;
                     case 2:
-                        dice3.setVisibility(View.VISIBLE);
+                        diceList.get(2).setVisibility(View.VISIBLE);
                         visibleCount++;
                         break;
                     case 3:
-                        dice2.setVisibility(View.INVISIBLE);
-                        dice3.setVisibility(View.INVISIBLE);
+                        diceList.get(1).setVisibility(View.INVISIBLE);
+                        diceList.get(2).setVisibility(View.INVISIBLE);
                         visibleCount=1;
                         break;
 
@@ -73,24 +77,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         mHandler.sendEmptyMessage(0);
-        List<ViewPropertyAnimator> animatorList = new ArrayList<ViewPropertyAnimator>();
-
         rotateValue += 500;
 
-        animatorList.add(dice1.animate());
-        animatorList.add(dice2.animate());
-        animatorList.add(dice3.animate());
-
         for(ViewPropertyAnimator animator : animatorList){
-            Random rand = new Random();
-
             animator.rotation(rotateValue);
         }
-
         if(rotateValue < 0){
             rotateValue = 0;
         }
-
         value=0;
         return super.onTouchEvent(event);
     }
@@ -100,13 +94,30 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
 
             Random rand = new Random();
-            int randVal1 = rand.nextInt(6)+1;
-            int randVal2 = rand.nextInt(6)+1;
-            int randVal3 = rand.nextInt(6)+1;
+            for(ImageView dice : diceList){
+                int randVal = rand.nextInt(6)+1;
 
-            dice1.setText(randVal1+"");
-            dice2.setText(randVal2+"");
-            dice3.setText(randVal3+"");
+                switch (randVal){
+                    case 1:
+                        dice.setImageResource(R.drawable.dice1);
+                        break;
+                    case 2:
+                        dice.setImageResource(R.drawable.dice2);
+                        break;
+                    case 3:
+                        dice.setImageResource(R.drawable.dice3);
+                        break;
+                    case 4:
+                        dice.setImageResource(R.drawable.dice4);
+                        break;
+                    case 5:
+                        dice.setImageResource(R.drawable.dice5);
+                        break;
+                    case 6:
+                        dice.setImageResource(R.drawable.dice6);
+                        break;
+                }
+            }
 
             value++;
             if(value <= 50){

@@ -17,7 +17,7 @@
         fab:fab_colorNormal="@color/fabPrimary"
         fab:fab_colorPressed="@color/fabPressed"
         fab:fab_colorRipple="@color/fabRipple" />
-    <TextView
+    <ImageView
         android:layout_width="60dp"
         android:layout_height="50dp"
         android:text="1"
@@ -27,7 +27,7 @@
         android:id="@+id/dice1"
         android:src="@drawable/dice1"/>
 
-    <TextView
+    <ImageView
         android:layout_width="60dp"
         android:layout_height="50dp"
         android:text="1"
@@ -38,7 +38,7 @@
         android:src="@drawable/dice1"
         android:visibility="invisible"/>
 
-    <TextView
+    <ImageView
         android:layout_width="60dp"
         android:layout_height="50dp"
         android:text="1"
