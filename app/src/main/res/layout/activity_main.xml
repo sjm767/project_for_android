@@ -35,7 +35,8 @@
         android:textAlignment="center"
         android:background="#00D8FF"
         android:id="@+id/dice2"
-        android:src="@drawable/dice1"/>
+        android:src="@drawable/dice1"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="60dp"
@@ -46,6 +47,7 @@
         android:background="#00D8FF"
         android:id="@+id/dice3"
         android:src="@drawable/dice1"
+        android:visibility="invisible"
         />
 
 

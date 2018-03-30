@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView dice2 = null;
     private TextView dice3 = null;
     private int value = 0;
-    private List<Long> rotateValue = new ArrayList<Long>();
+    private int rotateValue = 500;
     private int visibleCount = 1;
 
     @Override
@@ -46,10 +46,6 @@ public class MainActivity extends AppCompatActivity {
         dice3=(TextView)findViewById(R.id.dice3);
         fab = (FloatingActionButton)findViewById(R.id.fab);
 
-        rotateValue.add(new Long(0));
-        rotateValue.add(new Long(0));
-        rotateValue.add(new Long(0));
-
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -57,7 +53,18 @@ public class MainActivity extends AppCompatActivity {
                 switch (visibleCount){
                     case 1:
                         dice2.setVisibility(View.VISIBLE);
+                        visibleCount++;
                         break;
+                    case 2:
+                        dice3.setVisibility(View.VISIBLE);
+                        visibleCount++;
+                        break;
+                    case 3:
+                        dice2.setVisibility(View.INVISIBLE);
+                        dice3.setVisibility(View.INVISIBLE);
+                        visibleCount=1;
+                        break;
+
                 }
             }
         });
@@ -66,10 +73,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         mHandler.sendEmptyMessage(0);
+        List<ViewPropertyAnimator> animatorList = new ArrayList<ViewPropertyAnimator>();
 
         rotateValue += 500;
-
-        List<ViewPropertyAnimator> animatorList = new ArrayList<ViewPropertyAnimator>();
 
         animatorList.add(dice1.animate());
         animatorList.add(dice2.animate());
